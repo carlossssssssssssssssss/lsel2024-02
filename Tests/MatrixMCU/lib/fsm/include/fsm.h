@@ -74,9 +74,10 @@ void fsm_destroy(fsm_t *p_fsm);
  * The starting state of the state machine will correspond to the origin state of the first transition found in the transition table. The transition table must end with a null transition {-1, NULL, -1, NULL}. This will allow the state machine to detect that it has reached the end of the table. Unlike `fsm_new`, this function does not allocate memory for the state machine. Instead, it uses the memory address provided by the user.
  *
  * @param p_fsm Pointer to the memory address where the new state machine is located
- * @param p_tt Pointer to the  state machine transition table
+ * @param p_tt Pointer to the state machine transition table
+ * @return bool Indicates if initialization was correct (true) or not (false)
  */
-void fsm_init(fsm_t *p_fsm, fsm_trans_t *p_tt);
+bool fsm_init(fsm_t *p_fsm, fsm_trans_t *p_tt);
 
 /**
  * @brief Get the current state of the state machine.
@@ -102,5 +103,23 @@ void fsm_set_state(fsm_t *p_fsm, int state);
  * @param p_fsm Pointer to the memory address where the new state machine is located
  */
 void fsm_fire(fsm_t *p_fsm);
+
+/**
+ * @brief Port function to handle memory allocation. Default implementation with standard malloc
+ *
+ * @param s Amount of bytes to allocate in memory
+ * 
+ * @return Pointer to the memory address where the new state machine is located. NULL on error
+ */
+void* fsm_malloc(size_t s);
+
+/**
+ * @brief Port function to free memory allocated pointed by the argument. Default implementation with standard free
+ *
+ * @param p Pointer to the allocated memory.
+ * 
+ */
+void fsm_free(void* p);
+
 
 #endif /* FSM_H_ */

@@ -69,7 +69,10 @@ void test_fsm_new_nullWhenNullTransition(void)
  */
 void test_fsm_init_falseWhenNullFsm(void)
 {
-    TEST_IGNORE();
+    fsm_trans_t *p=(fsm_trans_t*)1;
+    bool f=fsm_init(NULL,p);
+    
+    TEST_ASSERT_EQUAL (false, f);
 }
 
 /**
@@ -78,7 +81,10 @@ void test_fsm_init_falseWhenNullFsm(void)
  */
 void test_fsm_init_falseWhenNullTransitions(void)
 {
-    TEST_IGNORE();
+    fsm_t fsm;
+    bool f=fsm_init(&fsm,NULL);
+    //TEST_IGNORE();
+    TEST_ASSERT_EQUAL (false, f);
 }
 
 /**
@@ -89,10 +95,21 @@ void test_fsm_init_falseWhenNullTransitions(void)
 void test_fsm_nullWhenFirstOrigStateIsMinusOne (void) {
   fsm_trans_t tt[] = {{-1, is_true, 1, do_nothing}};
   fsm_t *f = (fsm_t*)1;
+  
+  fsm_malloc_AddCallback(cb_malloc); //en el caso de que la llames llma a esta funcion
+  //Espero que se llame y cuando lo llames, devuelve el valor que ha devuelto
+  fsm_malloc_ExpectAnyArgsAndReturn(0);//para comprobar si llama la funcion, se pone un 0 pq devuelve lo que devuelve la funcion malloc
   f = fsm_new(tt);
- 
+  
+  //anyargs porque no quieres monitorizar el valor de entrada
+
+  //stub lo usas si te da igual si vas a llamar o no a la funcion, simplemente si la llamas, que llames a esa función
+
+  //VER QUE SON LOS MOCKS
+  //si pongo ignore es que me da igual si llaman a la funcion o no
+
 //TEST_ASSERT_EQUAL (XXX);
-  TEST_FAIL_MESSAGE("Implement the test");
+  //TEST_FAIL_MESSAGE("Implement the test");
 }
 
 /**
@@ -217,6 +234,8 @@ void test_fsm_new_nullWhenFsmMallocReturnsNull(void)
  */
 void test_fsm_destroy_callsFsmFree(void)
 {
+    //fsm_free_ExpectAnyArgs()
+    //fsm_destroy(NULL);
     TEST_IGNORE();
 }
 

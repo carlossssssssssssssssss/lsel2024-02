@@ -8,6 +8,8 @@
 
 #include <stdlib.h>
 
+#define DUMMY_VAL   0
+
 /**
  * @file test_fsm_legacy.c
  * @author 
@@ -17,7 +19,7 @@
  * @date 2024-04-09
  * 
  */
-
+int global_n = 0;
 /**
  * @brief Stub or Callback for fsm_malloc that calls real malloc. 
  * 
@@ -28,6 +30,10 @@
  * 
  */
 static void* cb_malloc(size_t s, int n) {
+    //Esto me permitiría contar el número de veces que se llama la función, almacenándolo en n
+    //static fsm_t array[50];
+    //global_n = n;
+    //return &array[n];
     return malloc(s);
 }
 
@@ -95,21 +101,10 @@ void test_fsm_init_falseWhenNullTransitions(void)
 void test_fsm_nullWhenFirstOrigStateIsMinusOne (void) {
   fsm_trans_t tt[] = {{-1, is_true, 1, do_nothing}};
   fsm_t *f = (fsm_t*)1;
-  
-  fsm_malloc_AddCallback(cb_malloc); //en el caso de que la llames llma a esta funcion
-  //Espero que se llame y cuando lo llames, devuelve el valor que ha devuelto
-  fsm_malloc_ExpectAnyArgsAndReturn(0);//para comprobar si llama la funcion, se pone un 0 pq devuelve lo que devuelve la funcion malloc
+  //Para comprobar que no se llama no se pone callback ni función Expect
+  //Si se llamase a callback daría error
   f = fsm_new(tt);
-  
-  //anyargs porque no quieres monitorizar el valor de entrada
-
-  //stub lo usas si te da igual si vas a llamar o no a la funcion, simplemente si la llamas, que llames a esa función
-
-  //VER QUE SON LOS MOCKS
-  //si pongo ignore es que me da igual si llaman a la funcion o no
-
-//TEST_ASSERT_EQUAL (XXX);
-  //TEST_FAIL_MESSAGE("Implement the test");
+  TEST_ASSERT_EQUAL (NULL, f);
 }
 
 /**
@@ -117,8 +112,14 @@ void test_fsm_nullWhenFirstOrigStateIsMinusOne (void) {
  * 
  */
 void test_fsm_nullWhenFirstDstStateIsMinusOne (void) {
+  fsm_trans_t tt[] = {{1, is_true, -1, do_nothing}};
+  fsm_t *f = (fsm_t*)1;
   
-  TEST_IGNORE();
+  //fsm_malloc_ExpectAnyArgsAndReturn(0); //COMO PUEDO HACER QUE NO ESPERE UNA LLAMADA SIN IGNORE?
+  //fsm_malloc_AddCallback(cb_malloc); 
+
+  f = fsm_new(tt);
+  TEST_ASSERT_EQUAL (NULL, f);
 }
 
 /**
@@ -126,12 +127,19 @@ void test_fsm_nullWhenFirstDstStateIsMinusOne (void) {
  * 
  */
 void test_fsm_nullWhenFirstCheckFunctionIsNull (void) {
+  fsm_trans_t tt[] = {{1, NULL, -1, do_nothing}};
+  fsm_t *f = (fsm_t*)1;
   
-  TEST_IGNORE();
+  //fsm_malloc_ExpectAnyArgsAndReturn(0); //COMO PUEDO HACER QUE NO ESPERE UNA LLAMADA SIN IGNORE?
+  //fsm_malloc_AddCallback(cb_malloc); 
+
+  f = fsm_new(tt);
+  TEST_ASSERT_EQUAL (NULL, f);
 }
 
+
 /**
- * @brief Devuelve puntero no NULL y llama a fsm_malloc (Stub) al crear la maquina de estados con una transición válida con función de actualización (salida) NULL o no NULL.
+ * @brief Devuelve puntero no NULL y llama a fsm_malloc (AddCallback) al crear la maquina de estados con una transición válida con función de actualización (salida) NULL o no NULL.
  *        Hay que liberar la memoria al final llamando a free
  * 
  */
@@ -140,25 +148,37 @@ TEST_CASE(do_nothing)
 void test_fsm_new_nonNullWhenOneValidTransitionCondition(fsm_output_func_t out)
 {
     fsm_trans_t tt[] = {
-        //{},
+        { 1, is_true, 1, out},
         {-1, NULL, -1, NULL}
     };
-     fsm_t *f = (fsm_t*)1;
+    fsm_t *f = (fsm_t*)1;
 
-     TEST_IGNORE();
+    fsm_malloc_AddCallback(cb_malloc);
+    fsm_malloc_ExpectAnyArgsAndReturn(DUMMY_VAL);
+    //Si usases solo expect tendrías que especificar la entrada
+    //fsm_malloc_ExpectAndReturn(sizeof(fsm_t), NULL);
 
-     free(f);
+    f = fsm_new(tt);
+    TEST_ASSERT_NOT_EQUAL(NULL, f);  
+    free(f);
 }
 
 
 /**
- * @brief Estado inicial corresponde al estado de entrada de la primera transición de la lista al crear una maquiina de estados y es valido. 
+ * @brief Estado inicial corresponde al estado de entrada de la primera transición de la lista al crear una maquina de estados y es valido. 
  * 
  */
 void test_fsm_new_fsmGetStateReturnsOrigStateOfFirstTransitionAfterInit(void)
 {
-
-    TEST_IGNORE();
+    fsm_t *f = (fsm_t*)1;
+    fsm_trans_t tt[] = {
+        { 0, is_true, 1, NULL}
+    };
+    
+    fsm_malloc_Stub(cb_malloc);
+    f = fsm_new(tt);
+    int s=fsm_get_state(f);
+    TEST_ASSERT_EQUAL(0, s);  
 }
 
 /**
@@ -167,17 +187,19 @@ void test_fsm_new_fsmGetStateReturnsOrigStateOfFirstTransitionAfterInit(void)
  */
 void test_fsm_fire_isTrueReturnsFalseMeansDoNothingIsNotCalledAndStateKeepsTheSame(void)
 {
+    fsm_t *f = (fsm_t*)1;
     fsm_trans_t tt[] = {
         {0, is_true, 1, do_nothing},
         {-1, NULL, -1, NULL}
     };
 
-    fsm_t f;
-    int res;
-    fsm_init(&f, tt);
-    res = fsm_get_state(&f);
+    fsm_malloc_Stub(cb_malloc);
+    f=fsm_new(tt);
+    is_true_ExpectAnyArgsAndReturn(0);
+    fsm_fire(f);
+    int s = fsm_get_state(f);
 
-   TEST_IGNORE();
+    TEST_ASSERT_EQUAL(s,0);  
 }
 
 /**
@@ -186,13 +208,15 @@ void test_fsm_fire_isTrueReturnsFalseMeansDoNothingIsNotCalledAndStateKeepsTheSa
  */
 void test_fsm_fire_checkFunctionCalledWithFsmPointerFromFsmFire(void)
 {
-
+    fsm_t *f = (fsm_t*)1;
     fsm_trans_t tt[] = {
         {0, is_true, 1, NULL},
         {-1, NULL, -1, NULL}
     };
-
-    TEST_IGNORE();
+    fsm_malloc_Stub(cb_malloc);
+    f=fsm_new(tt);
+    is_true_ExpectAndReturn(f, true);
+    fsm_fire(f);
 }
 
 /** 
@@ -202,14 +226,26 @@ void test_fsm_fire_checkFunctionCalledWithFsmPointerFromFsmFire(void)
 TEST_CASE(false, 0)
 TEST_CASE(true, 1)
 void test_fsm_fire_checkFunctionIsCalledAndResultIsImportantForTransition(bool returnValue, int expectedState)
-{
+{   
+    //hay que hacer un stub de is true pero no hay callback
+    //is_true_Stub()
+    fsm_t *f = (fsm_t*)1;
     fsm_trans_t tt[] = {
         {0, is_true, 1, NULL},
-        {-1, NULL, -1, NULL}
+        {1, is_true, 0, NULL },
+        {-1, NULL, -1, NULL }
     };
-    fsm_t f;
-    fsm_init(&f, tt);
-    TEST_IGNORE();
+
+    fsm_malloc_Stub(cb_malloc);
+    f=fsm_new(tt);
+    is_true_ExpectAnyArgsAndReturn(true);
+    fsm_fire(f);
+    int s1=fsm_get_state(f);
+    is_true_ExpectAnyArgsAndReturn(false);
+    fsm_fire(f);
+    int s2=fsm_get_state(f);
+    TEST_ASSERT_EQUAL(1,s1);  
+    TEST_ASSERT_EQUAL(1,s2);
 }
 
 
@@ -219,13 +255,16 @@ void test_fsm_fire_checkFunctionIsCalledAndResultIsImportantForTransition(bool r
  */
 void test_fsm_new_nullWhenFsmMallocReturnsNull(void)
 {
+    fsm_t *f = (fsm_t*)1;
     fsm_trans_t tt[] = {
         {0, is_true, 1, NULL},
         {1, is_true, 0, NULL},
         {-1, NULL, -1, NULL}
     };
 
-    TEST_IGNORE();
+    fsm_malloc_ExpectAnyArgsAndReturn(NULL);
+    f=fsm_new(tt);
+    TEST_ASSERT_EQUAL(NULL,f);  
 }
 
 /**
@@ -234,9 +273,9 @@ void test_fsm_new_nullWhenFsmMallocReturnsNull(void)
  */
 void test_fsm_destroy_callsFsmFree(void)
 {
-    //fsm_free_ExpectAnyArgs()
-    //fsm_destroy(NULL);
-    TEST_IGNORE();
+    fsm_t *f = (fsm_t*)1;
+    fsm_free_ExpectAnyArgs();
+    fsm_destroy(f);   
 }
 
 /**
@@ -245,18 +284,19 @@ void test_fsm_destroy_callsFsmFree(void)
  */
 void test_fsm_fire_callsFirstIsTrueFromState0AndThenIsTrue2FromState1(void)
 {
+    fsm_t *f = (fsm_t*)1;
     fsm_trans_t tt[] = {
         {0, is_true, 1, NULL},
-        //{1, is_true2, 0, NULL},   //Descomentar cuando se haya declarado una nueva función para mock is_true2
+        {1, is_true2, 0, NULL},   //Descomentar cuando se haya declarado una nueva función para mock is_true2
         {-1, NULL, -1, NULL}
     };
 
-    fsm_t f;
-    int res;
-    fsm_init(&f, tt);
-    res = fsm_get_state(&f);
-
-    TEST_IGNORE();
+    fsm_malloc_Stub(cb_malloc);
+    f=fsm_new(tt);
+    is_true_ExpectAnyArgsAndReturn(true);
+    fsm_fire(f);
+    is_true2_ExpectAnyArgsAndReturn(true);
+    fsm_fire(f);
 }
 
 /**
@@ -265,11 +305,16 @@ void test_fsm_fire_callsFirstIsTrueFromState0AndThenIsTrue2FromState1(void)
  */
 void test_fsm_new_calledTwiceWithSameValidDataCreatesDifferentInstancePointer(void)
 {
+    fsm_t *f1 = (fsm_t*)1;
+    fsm_t *f2 = (fsm_t*)1;
     fsm_trans_t tt[] = {
         {0, is_true, 1, NULL},
         {-1, NULL, -1, NULL}
     };
 
-    TEST_IGNORE();
+    fsm_malloc_Stub(cb_malloc);
+    f1=fsm_new(tt);
+    f2=fsm_new(tt);
+    TEST_ASSERT_NOT_EQUAL(f1,f2);  
 }
 

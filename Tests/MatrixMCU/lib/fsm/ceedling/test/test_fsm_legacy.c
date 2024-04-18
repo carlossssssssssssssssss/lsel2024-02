@@ -318,3 +318,57 @@ void test_fsm_new_calledTwiceWithSameValidDataCreatesDifferentInstancePointer(vo
     TEST_ASSERT_NOT_EQUAL(f1,f2);  
 }
 
+/**
+ * @brief fsm_init devuelve int con el número de transiciones válidas (con máximo de 128 indicado en un #define
+   FSM_MAX_TRANSITIONS).
+ * 
+ */
+
+
+#define FSM_VALID_TRANSITIONS_NUMBER  2
+void test_fsm_init_returnsValidTransitionsNumber(void)
+{
+    fsm_t fsm;
+    
+    fsm_trans_t tt[] = {
+        {0, is_true, 1, NULL},
+        {1, is_true, 0, NULL},
+        {1, is_true, 2, NULL},
+        {-1, NULL, -1, NULL}
+    };
+
+    is_true_ExpectAnyArgsAndReturn(1);
+    is_true_ExpectAnyArgsAndReturn(1);
+    is_true_ExpectAnyArgsAndReturn(0);
+    int f=fsm_init(&fsm,tt);
+    TEST_ASSERT_NOT_EQUAL(FSM_VALID_TRANSITIONS_NUMBER,f);  
+}
+
+#define FSM_MAX_TRANSITIONS
+
+/**
+ * @brief  Si el numero de transiciones válidas  mayor de 128, devuelve 0.
+ * 
+ */
+/*
+void test_fsm_init_returnsValidTransitionsNumberGreaterThanMaximum(void)
+{
+    fsm_t fsm;
+    
+    fsm_trans_t tt[] = {
+        {0, is_true, 1, NULL},
+    //    {1, is_true, 0, NULL},
+    //    {1, is_true, 2, NULL},
+        {-1, NULL, -1, NULL}
+    };
+
+    //Como puedo meterle 128 transiciones??
+    //Se puede hacer todo en una función
+
+    //is_true_ExpectAnyArgsAndReturn(1);
+    //is_true_ExpectAnyArgsAndReturn(1);
+    //is_true_ExpectAnyArgsAndReturn(0);
+    int f=fsm_init(&fsm,tt);
+    TEST_ASSERT_NOT_EQUAL(FSM_VALID_TRANSITIONS_NUMBER,f);  
+}
+*/

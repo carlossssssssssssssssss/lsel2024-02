@@ -387,7 +387,7 @@ void test_fsm_fire_NullGuardFunctionIsEqualToTrue(void)
 
 void test_fsm_fire_returnsNegativeOneIfCurrentStateHasNoTransition(void)
 {
-    //SE PUEDEN HACER LAS 3 PRUEBAS EN UNA SOLA FUNCIÓN?
+
     fsm_t *f = (fsm_t*)1;
     fsm_trans_t tt[] = {
         {1, is_true, 2, NULL},
@@ -408,7 +408,7 @@ void test_fsm_fire_returnsNegativeOneIfCurrentStateHasNoTransition(void)
 
 void test_fsm_fire_returnsZeroIfCurrentStateHasTransitionsButGuardIsFalse(void)
 {
-    //SE PUEDEN HACER LAS 3 PRUEBAS EN UNA SOLA FUNCIÓN?
+
     fsm_t *f = (fsm_t*)1;
     fsm_trans_t tt[] = {
         {0, is_true, 1, NULL},
@@ -428,7 +428,7 @@ void test_fsm_fire_returnsZeroIfCurrentStateHasTransitionsButGuardIsFalse(void)
 
 void test_fsm_fire_returnsOneIfCurrentStateHasTransitionsAndGuardIsTrue(void)
 {
-    //SE PUEDEN HACER LAS 3 PRUEBAS EN UNA SOLA FUNCIÓN?
+
     fsm_t *f = (fsm_t*)1;
     fsm_trans_t tt[] = {
         {0, is_true, 1, do_nothing},
@@ -459,6 +459,8 @@ void test_fsm_destroy_onlyCallsFsmFreeIfPointerIsNotNULL(void)
 */
 TEST_CASE(-1,0)
 TEST_CASE(0,-1)
+
+TEST_CASE(-1,-1)
 void test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (int orig_state, int dest_state) {
   fsm_trans_t tt[] = {
     {orig_state, NULL, dest_state, NULL},

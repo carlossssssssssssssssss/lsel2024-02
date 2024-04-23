@@ -34,10 +34,13 @@ static int fsm_check_transitions_init(fsm_t *p_fsm,fsm_trans_t *p_tt)
         return false;
     }
     fsm_trans_t *p_t;
+
     for (p_t = p_tt; p_t->orig_state >= 0; ++p_t){
-        if ((p_t->orig_state == -1) || (p_tt->dest_state == -1)){
-                return false;
-        }else if ((p_tt->in==NULL)||(p_tt->in(p_fsm))){
+        if ((p_t->orig_state == -1) || (p_tt->dest_state == -1)){ //esta linea no hace falta, me he pasao,puedo ponerla al principio con p_tt
+            return false;
+        }
+        
+        if ((p_tt->in==NULL)||(p_tt->in(p_fsm))){
             n++;
             if(n>=129){
                 n=0;

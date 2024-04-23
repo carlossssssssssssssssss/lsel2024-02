@@ -32,7 +32,7 @@ jobs:
           CUR=$PWD; 
           for f in `find . -type d`; do cd $CUR; cd $f; if test -f index.html; then echo "index.html exists in $f"; else for i in `ls`; do echo "<a href=\"$i/index.html\">$i</a></br>" >> index.html; done; fi; cd $CUR; done
       - name: Deploy to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           BRANCH: gh-pages
           FOLDER: gh-pages

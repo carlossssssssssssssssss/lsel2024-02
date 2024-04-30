@@ -26,13 +26,36 @@ void __attribute__((weak)) fsm_free(void* p)
 /* Other includes */
 #include "fsm.h"
 
+static int fsm_check_transitions_init(fsm_t *p_fsm,fsm_trans_t *p_tt)
+{
+    int n=0;
+    if (p_tt == NULL)    {
+        return false;
+    }
+    if ((p_tt->orig_state == -1) || (p_tt->dest_state == -1)){ 
+            return false;
+    }
+
+    fsm_trans_t *p_t;
+
+    for (p_t = p_tt; p_t->orig_state >= 0; ++p_t){       
+        if ((p_tt->in==NULL)||(p_tt->in(p_fsm))){
+            n++;
+            if(n>FSM_MAX_TRANSITIONS){
+                n=0;
+            }           
+        }
+    }
+    return n;
+}
+
 static bool fsm_check_transitions(fsm_trans_t *p_tt)
 {
     if (p_tt == NULL)
     {
         return false;
     }
-    if ((p_tt->orig_state == -1) || (p_tt->in == NULL) || (p_tt->dest_state == -1))
+    if ((p_tt->orig_state == -1) || (p_tt->dest_state == -1))
     {
         return false;
     }
@@ -60,19 +83,22 @@ fsm_t *fsm_new(fsm_trans_t *p_tt)
 
 void fsm_destroy(fsm_t *p_fsm)
 {
-    fsm_free(p_fsm);
+    if(p_fsm!=NULL){
+        fsm_free(p_fsm);
+    }
 }
 
-bool fsm_init(fsm_t *p_fsm, fsm_trans_t *p_tt)
+int fsm_init(fsm_t *p_fsm, fsm_trans_t *p_tt)
 {
     if (p_fsm == NULL) {
         return false;
     }
-    if (!fsm_check_transitions(p_tt)) {
+    int n=fsm_check_transitions_init(p_fsm,p_tt);
+    if (n==0) {
         return false;
     }
     fsm_init_no_check(p_fsm, p_tt);
-    return true;
+    return n;
 }
 
 int fsm_get_state(fsm_t *p_fsm)
@@ -85,19 +111,29 @@ void fsm_set_state(fsm_t *p_fsm, int state)
     p_fsm->current_state = state;
 }
 
-void fsm_fire(fsm_t *p_fsm)
+int fsm_fire(fsm_t *p_fsm)
 {
     fsm_trans_t *p_t;
     for (p_t = p_fsm->p_tt; p_t->orig_state >= 0; ++p_t)
     {
-        if ((p_fsm->current_state == p_t->orig_state) && p_t->in(p_fsm))
+        if ((p_fsm->current_state == p_t->orig_state) )
         {
-            p_fsm->current_state = p_t->dest_state;
-            if (p_t->out)
-            {
-                p_t->out(p_fsm);
-            }
-            break;
+            if(p_t->in==NULL){
+                p_fsm->current_state = p_t->dest_state;
+                if (p_t->out)
+                {
+                    p_t->out(p_fsm);
+                }
+                return 1;
+            }else if(p_t-> in(p_fsm)){
+                p_fsm->current_state = p_t->dest_state;
+                if (p_t->out)
+                {
+                    p_t->out(p_fsm);
+                }
+                return 1;
+            }else return 0;
         }
     }
+    return -1;
 }

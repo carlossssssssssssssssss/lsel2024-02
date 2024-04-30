@@ -27,6 +27,14 @@ extern void test_fsm_new_nullWhenFsmMallocReturnsNull(void);
 extern void test_fsm_destroy_callsFsmFree(void);
 extern void test_fsm_fire_callsFirstIsTrueFromState0AndThenIsTrue2FromState1(void);
 extern void test_fsm_new_calledTwiceWithSameValidDataCreatesDifferentInstancePointer(void);
+extern void test_fsm_init_returnsValidTransitionsNumber(int transitions,int returned_transitions);
+extern void test_fsm_fire_NullGuardFunctionIsEqualToTrue(void);
+extern void test_fsm_fire_returnsNegativeOneIfCurrentStateHasNoTransition(void);
+extern void test_fsm_fire_returnsZeroIfCurrentStateHasTransitionsButGuardIsFalse(void);
+extern void test_fsm_fire_returnsOneIfCurrentStateHasTransitionsAndGuardIsTrue(void);
+extern void test_fsm_destroy_onlyCallsFsmFreeIfPointerIsNotNULL(void);
+extern void test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (int orig_state, int dest_state);
+extern void test_fsm_initReturnsZeroIfAllGuardsAreInvalid (void);
 
 
 /*=======Mock Management=====*/
@@ -107,6 +115,30 @@ static void runner_args2_test_fsm_fire_checkFunctionIsCalledAndResultIsImportant
 {
     test_fsm_fire_checkFunctionIsCalledAndResultIsImportantForTransition(true, 1);
 }
+static void runner_args1_test_fsm_init_returnsValidTransitionsNumber(void)
+{
+    test_fsm_init_returnsValidTransitionsNumber(2,2);
+}
+static void runner_args2_test_fsm_init_returnsValidTransitionsNumber(void)
+{
+    test_fsm_init_returnsValidTransitionsNumber(FSM_MAX_TRANSITIONS,FSM_MAX_TRANSITIONS);
+}
+static void runner_args3_test_fsm_init_returnsValidTransitionsNumber(void)
+{
+    test_fsm_init_returnsValidTransitionsNumber(129,0);
+}
+static void runner_args1_test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (void)
+{
+    test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (-1,0);
+}
+static void runner_args2_test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (void)
+{
+    test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (0,-1);
+}
+static void runner_args3_test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (void)
+{
+    test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (-1,-1);
+}
 
 /*=======MAIN=====*/
 int main(void)
@@ -129,6 +161,18 @@ int main(void)
   run_test(test_fsm_destroy_callsFsmFree, "test_fsm_destroy_callsFsmFree", 274);
   run_test(test_fsm_fire_callsFirstIsTrueFromState0AndThenIsTrue2FromState1, "test_fsm_fire_callsFirstIsTrueFromState0AndThenIsTrue2FromState1", 285);
   run_test(test_fsm_new_calledTwiceWithSameValidDataCreatesDifferentInstancePointer, "test_fsm_new_calledTwiceWithSameValidDataCreatesDifferentInstancePointer", 306);
+  run_test(runner_args1_test_fsm_init_returnsValidTransitionsNumber, "test_fsm_init_returnsValidTransitionsNumber(2,2)", 333);
+  run_test(runner_args2_test_fsm_init_returnsValidTransitionsNumber, "test_fsm_init_returnsValidTransitionsNumber(FSM_MAX_TRANSITIONS,FSM_MAX_TRANSITIONS)", 333);
+  run_test(runner_args3_test_fsm_init_returnsValidTransitionsNumber, "test_fsm_init_returnsValidTransitionsNumber(129,0)", 333);
+  run_test(test_fsm_fire_NullGuardFunctionIsEqualToTrue, "test_fsm_fire_NullGuardFunctionIsEqualToTrue", 363);
+  run_test(test_fsm_fire_returnsNegativeOneIfCurrentStateHasNoTransition, "test_fsm_fire_returnsNegativeOneIfCurrentStateHasNoTransition", 388);
+  run_test(test_fsm_fire_returnsZeroIfCurrentStateHasTransitionsButGuardIsFalse, "test_fsm_fire_returnsZeroIfCurrentStateHasTransitionsButGuardIsFalse", 407);
+  run_test(test_fsm_fire_returnsOneIfCurrentStateHasTransitionsAndGuardIsTrue, "test_fsm_fire_returnsOneIfCurrentStateHasTransitionsAndGuardIsTrue", 425);
+  run_test(test_fsm_destroy_onlyCallsFsmFreeIfPointerIsNotNULL, "test_fsm_destroy_onlyCallsFsmFreeIfPointerIsNotNULL", 450);
+  run_test(runner_args1_test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid , "test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (-1,0)", 464);
+  run_test(runner_args2_test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid , "test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (0,-1)", 464);
+  run_test(runner_args3_test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid , "test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (-1,-1)", 464);
+  run_test(test_fsm_initReturnsZeroIfAllGuardsAreInvalid , "test_fsm_initReturnsZeroIfAllGuardsAreInvalid ", 477);
 
   CMock_Guts_MemFreeFinal();
   return UnityEnd();

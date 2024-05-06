@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"mock_test_fsm.h": "c",
+			"fsm.h": "c",
+			"test_fsm.h": "c",
+			"cmock.h": "c"
+		}
+	}
+}

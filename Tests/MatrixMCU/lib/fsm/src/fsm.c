@@ -29,20 +29,19 @@ void __attribute__((weak)) fsm_free(void* p)
 static int fsm_check_transitions_init(fsm_t *p_fsm,fsm_trans_t *p_tt)
 {
     int n=0;
-    if (p_tt == NULL)
-    {
+    if (p_tt == NULL)    {
         return false;
     }
+    if ((p_tt->orig_state == -1) || (p_tt->dest_state == -1)){ 
+            return false;
+    }
+
     fsm_trans_t *p_t;
 
-    for (p_t = p_tt; p_t->orig_state >= 0; ++p_t){
-        if ((p_t->orig_state == -1) || (p_tt->dest_state == -1)){ //esta linea no hace falta, me he pasao,puedo ponerla al principio con p_tt
-            return false;
-        }
-        
+    for (p_t = p_tt; p_t->orig_state >= 0; ++p_t){       
         if ((p_tt->in==NULL)||(p_tt->in(p_fsm))){
             n++;
-            if(n>=129){
+            if(n>FSM_MAX_TRANSITIONS){
                 n=0;
             }           
         }
@@ -114,13 +113,11 @@ void fsm_set_state(fsm_t *p_fsm, int state)
 
 int fsm_fire(fsm_t *p_fsm)
 {
-    int counter=0;
     fsm_trans_t *p_t;
     for (p_t = p_fsm->p_tt; p_t->orig_state >= 0; ++p_t)
     {
         if ((p_fsm->current_state == p_t->orig_state) )
         {
-            counter++;
             if(p_t->in==NULL){
                 p_fsm->current_state = p_t->dest_state;
                 if (p_t->out)
@@ -138,7 +135,5 @@ int fsm_fire(fsm_t *p_fsm)
             }else return 0;
         }
     }
-    if(counter==0){
-        return -1;
-    }
+    return -1;
 }

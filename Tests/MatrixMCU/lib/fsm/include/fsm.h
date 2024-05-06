@@ -13,7 +13,7 @@
 #include <stdbool.h>
 
 /* Typedefs --------------------------------------------------------------------*/
-
+#define FSM_MAX_TRANSITIONS 128
 /**
  * @brief Make `fsm_t` struct public 
  */

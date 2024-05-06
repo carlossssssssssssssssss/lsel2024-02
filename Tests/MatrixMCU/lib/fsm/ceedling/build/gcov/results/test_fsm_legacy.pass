@@ -1,0 +1,132 @@
+---
+:source:
+  :path: test
+  :file: test_fsm_legacy.c
+:successes:
+- :test: test_fsm_new_nullWhenNullTransition
+  :line: 62
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_init_falseWhenNullFsm
+  :line: 75
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_init_falseWhenNullTransitions
+  :line: 87
+  :message: ''
+  :unity_test_time: 0
+- :test: 'test_fsm_nullWhenFirstOrigStateIsMinusOne '
+  :line: 100
+  :message: ''
+  :unity_test_time: 0
+- :test: 'test_fsm_nullWhenFirstDstStateIsMinusOne '
+  :line: 113
+  :message: ''
+  :unity_test_time: 0
+- :test: 'test_fsm_nullWhenFirstCheckFunctionIsNull '
+  :line: 131
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_nonNullWhenOneValidTransitionCondition(NULL)
+  :line: 153
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_nonNullWhenOneValidTransitionCondition(do_nothing)
+  :line: 153
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_fsmGetStateReturnsOrigStateOfFirstTransitionAfterInit
+  :line: 176
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_isTrueReturnsFalseMeansDoNothingIsNotCalledAndStateKeepsTheSame
+  :line: 194
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_checkFunctionCalledWithFsmPointerFromFsmFire
+  :line: 215
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_checkFunctionIsCalledAndResultIsImportantForTransition(false,
+    0)
+  :line: 234
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_checkFunctionIsCalledAndResultIsImportantForTransition(true,
+    1)
+  :line: 234
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_nullWhenFsmMallocReturnsNull
+  :line: 256
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_destroy_callsFsmFree
+  :line: 274
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_callsFirstIsTrueFromState0AndThenIsTrue2FromState1
+  :line: 285
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_calledTwiceWithSameValidDataCreatesDifferentInstancePointer
+  :line: 306
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_init_returnsValidTransitionsNumber(2,2)
+  :line: 333
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_init_returnsValidTransitionsNumber(FSM_MAX_TRANSITIONS,FSM_MAX_TRANSITIONS)
+  :line: 333
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_init_returnsValidTransitionsNumber(129,0)
+  :line: 333
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_NullGuardFunctionIsEqualToTrue
+  :line: 363
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_returnsNegativeOneIfCurrentStateHasNoTransition
+  :line: 388
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_returnsZeroIfCurrentStateHasTransitionsButGuardIsFalse
+  :line: 407
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_returnsOneIfCurrentStateHasTransitionsAndGuardIsTrue
+  :line: 425
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_destroy_onlyCallsFsmFreeIfPointerIsNotNULL
+  :line: 450
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (-1,0)
+  :line: 464
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (0,-1)
+  :line: 464
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (-1,-1)
+  :line: 464
+  :message: ''
+  :unity_test_time: 0
+- :test: 'test_fsm_initReturnsZeroIfAllGuardsAreInvalid '
+  :line: 477
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 29
+  :passed: 29
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 0.005270500999998262

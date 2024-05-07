@@ -13,7 +13,7 @@
 #include <stdbool.h>
 
 /* Typedefs --------------------------------------------------------------------*/
-
+#define FSM_MAX_TRANSITIONS 128
 /**
  * @brief Make `fsm_t` struct public 
  */
@@ -77,7 +77,7 @@ void fsm_destroy(fsm_t *p_fsm);
  * @param p_tt Pointer to the state machine transition table
  * @return bool Indicates if initialization was correct (true) or not (false)
  */
-bool fsm_init(fsm_t *p_fsm, fsm_trans_t *p_tt);
+int fsm_init(fsm_t *p_fsm, fsm_trans_t *p_tt);
 
 /**
  * @brief Get the current state of the state machine.
@@ -102,7 +102,7 @@ void fsm_set_state(fsm_t *p_fsm, int state);
  *
  * @param p_fsm Pointer to the memory address where the new state machine is located
  */
-void fsm_fire(fsm_t *p_fsm);
+int fsm_fire(fsm_t *p_fsm);
 
 /**
  * @brief Port function to handle memory allocation. Default implementation with standard malloc

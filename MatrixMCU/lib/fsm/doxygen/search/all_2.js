@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['dest_5fstate_4',['dest_state',['../structfsm__trans__t.html#af125a66cfa85df848aa173961218e809',1,'fsm_trans_t']]],
-  ['do_5fnothing_5',['do_nothing',['../test__fsm_8h.html#a4523b32f0f5100b18a0f4cb3704d0d87',1,'test_fsm.h']]],
-  ['dummy_5fval_6',['DUMMY_VAL',['../test__fsm__legacy_8c.html#a56e0504cd80a4cf785e7d94588e099fb',1,'test_fsm_legacy.c']]]
+  ['cb_5ffree_2',['cb_free',['../test__fsm__legacy_8c.html#acb060048db2c89746a4c574527f94c0a',1,'test_fsm_legacy.c']]],
+  ['cb_5fmalloc_3',['cb_malloc',['../test__fsm__legacy_8c.html#a990ea80fe562f19684aa5984e0f38487',1,'test_fsm_legacy.c']]],
+  ['current_5fstate_4',['current_state',['../structfsm__t.html#ab250e61dab922ea23423a06fd1e6ea34',1,'fsm_t']]]
 ];

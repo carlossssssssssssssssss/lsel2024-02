@@ -2,7 +2,7 @@ name: Web Page
 on: 
   workflow_run:
     workflows: [Ceedling Testing]
-    types: [Completed]
+    types: [completed]
 jobs:
   test:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}

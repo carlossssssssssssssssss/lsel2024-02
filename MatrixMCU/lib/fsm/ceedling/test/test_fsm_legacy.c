@@ -298,3 +298,173 @@ void test_fsm_new_calledTwiceWithSameValidDataCreatesDifferentInstancePointer(vo
     f2=fsm_new(tt);
     TEST_ASSERT_NOT_EQUAL(f1,f2);  
 }
+
+/**
+ * @brief fsm_init devuelve int con el número de transiciones válidas (con máximo de 128 indicado en un #define
+   FSM_MAX_TRANSITIONS).
+ * 
+ */
+
+
+
+TEST_CASE(2,2)
+TEST_CASE(FSM_MAX_TRANSITIONS,FSM_MAX_TRANSITIONS)
+TEST_CASE(129,0)
+
+void test_fsm_init_returnsValidTransitionsNumber(int transitions,int returned_transitions)
+{
+    fsm_t fsm;
+    
+    fsm_trans_t tt[transitions+1];
+
+    for(int i=0;i<(transitions);i++){
+        tt[i].dest_state=0;
+        tt[i].in=is_true;
+        tt[i].orig_state=1;
+        tt[i].out=NULL;
+    }
+
+    tt[transitions].dest_state=-1;
+    tt[transitions].in=NULL;
+    tt[transitions].orig_state=-1;
+    tt[transitions].out=NULL;
+    
+    for(int i=0;i<transitions;++i){
+        is_true_ExpectAnyArgsAndReturn(true);   
+    }
+
+    int valid_transitions=fsm_init(&fsm,tt);
+    TEST_ASSERT_EQUAL(returned_transitions,valid_transitions);  
+}
+
+/**
+ * @brief  Una funcion de guarda NULL en una transición equivale a que se cumpla siempre (devuelve true) 
+ * 
+ */
+void test_fsm_fire_NullGuardFunctionIsEqualToTrue(void)
+{
+    fsm_t fsm;
+    fsm_trans_t tt[] = {
+        {0,  NULL,  1, do_nothing},
+        {1,  NULL,  0, NULL},
+        {-1, NULL, -1, NULL}
+    };
+
+    int n=fsm_init(&fsm,tt);
+    fsm_set_state(&fsm,0);
+    do_nothing_ExpectAnyArgs();
+    fsm_fire(&fsm);   
+    int state1=fsm_get_state(&fsm);
+    TEST_ASSERT_EQUAL(1,state1); 
+    fsm_fire(&fsm);   
+    int state0=fsm_get_state(&fsm); 
+    TEST_ASSERT_EQUAL(0,state0); 
+}
+
+
+/**
+ * @brief  fsm_fire devuelve -1 si no hay ninguna transición para el estado actual 
+ * 
+ */
+void test_fsm_fire_returnsNegativeOneIfCurrentStateHasNoTransition(void)
+{
+    fsm_t *f = (fsm_t*)1;
+    fsm_trans_t tt[] = {
+        {1, is_true, 2, NULL},
+        {-1, NULL, -1, NULL}
+    };
+    //is_true_ExpectAnyArgsAndReturn(1);
+    fsm_malloc_Stub(cb_malloc);
+    f=fsm_new(tt);
+    fsm_set_state(f,0);
+    int n=fsm_fire(f);
+    TEST_ASSERT_EQUAL(-1,n);  
+}
+
+/**
+ * @brief  fsm_fire devuelve 0 si hay ninguna transición para el estado actual pero la función de guarda devuelve 0
+ * 
+ */
+void test_fsm_fire_returnsZeroIfCurrentStateHasTransitionsButGuardIsFalse(void)
+{
+    fsm_t *f = (fsm_t*)1;
+    fsm_trans_t tt[] = {
+        {0, is_true, 1, NULL},
+        {-1, NULL, -1, NULL}
+    };
+    is_true_ExpectAnyArgsAndReturn(0);
+    fsm_malloc_Stub(cb_malloc);
+    f=fsm_new(tt);
+    int n=fsm_fire(f);
+    TEST_ASSERT_EQUAL(0,n); 
+}
+
+/**
+ * @brief  fsm_fire devuelve 1 si hay alguna transición para el estado actual y la función de guarda devuelve 1
+ * 
+ */
+void test_fsm_fire_returnsOneIfCurrentStateHasTransitionsAndGuardIsTrue(void)
+{
+    fsm_t fsm;
+    fsm_trans_t tt[] = {
+        {0, is_true, 1, do_nothing},
+        {1, is_true, 2, NULL},
+        {-1, NULL, -1, NULL}
+    };
+    is_true_ExpectAnyArgsAndReturn(1);
+    is_true_ExpectAnyArgsAndReturn(1);
+    is_true_ExpectAnyArgsAndReturn(1);
+    do_nothing_ExpectAnyArgs();
+    is_true_ExpectAnyArgsAndReturn(1);
+
+    fsm_init(&fsm,tt);
+    int n1=fsm_fire(&fsm);
+    TEST_ASSERT_EQUAL(1,n1); 
+    int n2=fsm_fire(&fsm);
+    TEST_ASSERT_EQUAL(1,n2); 
+}
+
+/**
+ * @brief Llamada a fsm_destroy llama a fsm_free solo si el puntero pasado no es NULL
+ * 
+ */
+void test_fsm_destroy_onlyCallsFsmFreeIfPointerIsNotNULL(void)
+{
+    fsm_t *f=NULL;
+    fsm_destroy(f);
+    //Hay que comprobar tb el caso en que el puntero no sea nulo????
+}
+
+/**
+* @brief fsm_init devuelve 0 si el estado de origen o el de salida es -1
+*/
+TEST_CASE(-1,0)
+TEST_CASE(0,-1)
+
+TEST_CASE(-1,-1)
+void test_fsm_initReturnsZeroIfOrigStateOrDestStateAreInvalid (int orig_state, int dest_state) {
+  fsm_trans_t tt[] = {
+    {orig_state, NULL, dest_state, NULL},
+    {-1, NULL, -1, NULL}
+    };
+  fsm_t *f = (fsm_t*)1;
+  int n = fsm_init(f,tt);
+  TEST_ASSERT_EQUAL (0, n);
+}
+
+/**
+* @brief fsm_init devuelve 0 si las todas las funciones de guarda devuelven 0
+*/
+void test_fsm_initReturnsZeroIfAllGuardsAreInvalid (void) {
+  fsm_trans_t tt[] = {
+    {0, is_true, 1, NULL},
+    {0, is_true, 1, do_nothing},
+    {-1, NULL, -1, NULL}
+    };
+
+  is_true_ExpectAnyArgsAndReturn(0);
+  is_true_ExpectAnyArgsAndReturn(0);
+  fsm_t *f = (fsm_t*)1;
+  int n = fsm_init(f,tt);
+  TEST_ASSERT_EQUAL (0, n);
+}

@@ -1,0 +1,84 @@
+---
+:source:
+  :path: test
+  :file: test_fsm_legacy.c
+:successes:
+- :test: test_fsm_new_nullWhenNullTransition
+  :line: 57
+  :message: ''
+  :unity_test_time: 0
+:failures:
+- :test: 'test_fsm_nullWhenFirstOrigStateIsMinusOne '
+  :line: 95
+  :message: Implement the test
+  :unity_test_time: 0
+:ignores:
+- :test: test_fsm_init_falseWhenNullFsm
+  :line: 72
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_init_falseWhenNullTransitions
+  :line: 81
+  :message: ''
+  :unity_test_time: 0
+- :test: 'test_fsm_nullWhenFirstDstStateIsMinusOne '
+  :line: 104
+  :message: ''
+  :unity_test_time: 0
+- :test: 'test_fsm_nullWhenFirstCheckFunctionIsNull '
+  :line: 113
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_nonNullWhenOneValidTransitionCondition(NULL)
+  :line: 131
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_nonNullWhenOneValidTransitionCondition(do_nothing)
+  :line: 131
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_fsmGetStateReturnsOrigStateOfFirstTransitionAfterInit
+  :line: 144
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_isTrueReturnsFalseMeansDoNothingIsNotCalledAndStateKeepsTheSame
+  :line: 163
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_checkFunctionCalledWithFsmPointerFromFsmFire
+  :line: 178
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_checkFunctionIsCalledAndResultIsImportantForTransition(false,
+    0)
+  :line: 195
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_checkFunctionIsCalledAndResultIsImportantForTransition(true,
+    1)
+  :line: 195
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_nullWhenFsmMallocReturnsNull
+  :line: 211
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_destroy_callsFsmFree
+  :line: 220
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_fire_callsFirstIsTrueFromState0AndThenIsTrue2FromState1
+  :line: 240
+  :message: ''
+  :unity_test_time: 0
+- :test: test_fsm_new_calledTwiceWithSameValidDataCreatesDifferentInstancePointer
+  :line: 254
+  :message: ''
+  :unity_test_time: 0
+:counts:
+  :total: 17
+  :passed: 1
+  :failed: 1
+  :ignored: 15
+:stdout: []
+:time: 0.0017303000000765678

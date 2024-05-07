@@ -4,81 +4,81 @@
   :file: test_fsm_legacy.c
 :successes:
 - :test: test_fsm_new_nullWhenNullTransition
-  :line: 57
+  :line: 59
   :message: ''
   :unity_test_time: 0
-:failures:
-- :test: 'test_fsm_nullWhenFirstOrigStateIsMinusOne '
-  :line: 95
-  :message: Implement the test
-  :unity_test_time: 0
-:ignores:
 - :test: test_fsm_init_falseWhenNullFsm
-  :line: 72
+  :line: 70
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_init_falseWhenNullTransitions
-  :line: 81
+  :line: 82
+  :message: ''
+  :unity_test_time: 0
+- :test: 'test_fsm_nullWhenFirstOrigStateIsMinusOne '
+  :line: 94
   :message: ''
   :unity_test_time: 0
 - :test: 'test_fsm_nullWhenFirstDstStateIsMinusOne '
-  :line: 104
+  :line: 105
   :message: ''
   :unity_test_time: 0
 - :test: 'test_fsm_nullWhenFirstCheckFunctionIsNull '
-  :line: 113
+  :line: 119
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_new_nonNullWhenOneValidTransitionCondition(NULL)
-  :line: 131
+  :line: 137
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_new_nonNullWhenOneValidTransitionCondition(do_nothing)
-  :line: 131
+  :line: 137
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_new_fsmGetStateReturnsOrigStateOfFirstTransitionAfterInit
-  :line: 144
+  :line: 157
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_fire_isTrueReturnsFalseMeansDoNothingIsNotCalledAndStateKeepsTheSame
-  :line: 163
+  :line: 175
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_fire_checkFunctionCalledWithFsmPointerFromFsmFire
-  :line: 178
+  :line: 196
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_fire_checkFunctionIsCalledAndResultIsImportantForTransition(false,
     0)
-  :line: 195
+  :line: 215
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_fire_checkFunctionIsCalledAndResultIsImportantForTransition(true,
     1)
-  :line: 195
+  :line: 215
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_new_nullWhenFsmMallocReturnsNull
-  :line: 211
+  :line: 237
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_destroy_callsFsmFree
-  :line: 220
+  :line: 255
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_fire_callsFirstIsTrueFromState0AndThenIsTrue2FromState1
-  :line: 240
+  :line: 266
   :message: ''
   :unity_test_time: 0
 - :test: test_fsm_new_calledTwiceWithSameValidDataCreatesDifferentInstancePointer
-  :line: 254
+  :line: 287
   :message: ''
   :unity_test_time: 0
+:failures: []
+:ignores: []
 :counts:
   :total: 17
-  :passed: 1
-  :failed: 1
-  :ignored: 15
+  :passed: 17
+  :failed: 0
+  :ignored: 0
 :stdout: []
-:time: 0.0017303000000765678
+:time: 0.001721099999940634

@@ -42,6 +42,24 @@ void is_true_Stub(CMOCK_is_true_CALLBACK Callback);
 void is_true_CMockReturnMemThruPtr_f(UNITY_LINE_TYPE cmock_line, fsm_t* f, size_t cmock_size);
 #define is_true_IgnoreArg_f() is_true_CMockIgnoreArg_f(__LINE__)
 void is_true_CMockIgnoreArg_f(UNITY_LINE_TYPE cmock_line);
+#define is_true2_IgnoreAndReturn(cmock_retval) is_true2_CMockIgnoreAndReturn(__LINE__, cmock_retval)
+void is_true2_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
+#define is_true2_StopIgnore() is_true2_CMockStopIgnore()
+void is_true2_CMockStopIgnore(void);
+#define is_true2_ExpectAnyArgsAndReturn(cmock_retval) is_true2_CMockExpectAnyArgsAndReturn(__LINE__, cmock_retval)
+void is_true2_CMockExpectAnyArgsAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
+#define is_true2_ExpectAndReturn(f, cmock_retval) is_true2_CMockExpectAndReturn(__LINE__, f, cmock_retval)
+void is_true2_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, fsm_t* f, _Bool cmock_to_return);
+typedef _Bool (* CMOCK_is_true2_CALLBACK)(fsm_t* f, int cmock_num_calls);
+void is_true2_AddCallback(CMOCK_is_true2_CALLBACK Callback);
+void is_true2_Stub(CMOCK_is_true2_CALLBACK Callback);
+#define is_true2_StubWithCallback is_true2_Stub
+#define is_true2_ReturnThruPtr_f(f) is_true2_CMockReturnMemThruPtr_f(__LINE__, f, sizeof(fsm_t))
+#define is_true2_ReturnArrayThruPtr_f(f, cmock_len) is_true2_CMockReturnMemThruPtr_f(__LINE__, f, cmock_len * sizeof(*f))
+#define is_true2_ReturnMemThruPtr_f(f, cmock_size) is_true2_CMockReturnMemThruPtr_f(__LINE__, f, cmock_size)
+void is_true2_CMockReturnMemThruPtr_f(UNITY_LINE_TYPE cmock_line, fsm_t* f, size_t cmock_size);
+#define is_true2_IgnoreArg_f() is_true2_CMockIgnoreArg_f(__LINE__)
+void is_true2_CMockIgnoreArg_f(UNITY_LINE_TYPE cmock_line);
 #define do_nothing_Ignore() do_nothing_CMockIgnore()
 void do_nothing_CMockIgnore(void);
 #define do_nothing_StopIgnore() do_nothing_CMockStopIgnore()

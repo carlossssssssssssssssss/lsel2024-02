@@ -6,6 +6,7 @@ int
 snake_time_init (snake_game_t* p_game) 
 {
   /* Get from original code, if any. Return 0 if wrong and 1 if correct */
+  return 1;
 }
 
 void 
@@ -19,5 +20,5 @@ snake_time_delay_ms (uint32_t ms)
 {
   /* Get from original code */
   /* Delay argument in ms */
-
+  usleep(ms*1000);
 }

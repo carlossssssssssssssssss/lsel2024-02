@@ -99,6 +99,12 @@ int
 snake_input_init(snake_game_t* p_game)
 {
   /* Get from original code. Return 0 if wrong and 1 if correct */
+  	evpoll.fd = open_evdev("Raspberry Pi Sense HAT Joystick");
+	if (evpoll.fd < 0) {
+		fprintf(stderr, "Event device not found.\n");
+		return evpoll.fd;
+	}
+	return 1;
 }
 
 void
@@ -117,6 +123,7 @@ void
 snake_input_close(snake_game_t* p_game)
 {
   /* Get from original code, if something to close */
+  close(evpoll.fd);
 }
 
 

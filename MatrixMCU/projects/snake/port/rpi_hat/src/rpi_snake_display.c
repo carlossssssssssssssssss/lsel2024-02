@@ -61,6 +61,15 @@ static int open_fbdev(const char *dev_name)
 static int fbfd = 0;
 static struct fb_t* fb = NULL;
 
+struct snake_t snake = {
+	{NULL, 4, 4},
+	NULL,
+	NONE,
+};
+struct apple_t apple = {
+	4, 4,
+};
+
 void 
 snake_display_render(snake_game_t* p_game)
 {
@@ -70,6 +79,13 @@ snake_display_render(snake_game_t* p_game)
   /* Draw apple as a GREEN pixel */
   /* Draw snake head as BLUE */
   /* Draw snake body as RED */
+  	struct segment_t *seg_i;
+	memset(fb, 0, 128);
+	for(seg_i = snake.tail; seg_i->next; seg_i=seg_i->next) {
+		fb->pixel[seg_i->x][seg_i->y] = 0x7E0;
+	}
+	fb->pixel[seg_i->x][seg_i->y]=0xFFFF;
+	fb->pixel[apple.x][apple.y]=0xF800;
 
 }
 
@@ -81,10 +97,26 @@ snake_display_init(snake_game_t* p_game)
   p_game->limits.y = 8;
 
   /* Get from original code. Return 0 if wrong and 1 if correct */
+  	fbfd = open_fbdev("RPi-Sense FB");
+	if (fbfd <= 0) {
+		printf("Error: cannot open framebuffer device.\n");
+		return 0; 
+	}
+	fb = mmap(0, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+
+	if (!fb) {
+		printf("Failed to mmap.\n");
+		return 0;
+	}
+	memset(fb, 0, 128);
+	return 1;
 }
 
 void
 snake_display_close(snake_game_t* p_game)
 {
   /* Get from original code, if something to close */
+  	memset(fb, 0, 128);
+	munmap(fb, 128);
+	close(fbfd);
 }

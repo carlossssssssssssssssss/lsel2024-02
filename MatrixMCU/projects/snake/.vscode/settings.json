@@ -3,7 +3,8 @@
         "*.port": "makefile",
         "rb.h": "c",
         "stm32f4xx_hal.h": "c",
-        "snake_time.h": "c"
+        "snake_time.h": "c",
+        "snake_display.h": "c"
     },
     "ceedlingExplorer.problemMatching": {
         "mode": "gcc"

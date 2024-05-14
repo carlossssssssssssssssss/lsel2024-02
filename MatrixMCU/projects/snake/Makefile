@@ -137,5 +137,5 @@ $(OUTPUT)/$(TARGET)$(EXT): $(OBJECTS) Makefile
 # clean up
 #######################################
 clean:
-	$(RM) $(OUTPUT)
+	$(RM) $(OUTPUT)/*
 	@echo Cleanup complete!

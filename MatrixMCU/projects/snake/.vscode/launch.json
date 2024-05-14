@@ -33,7 +33,7 @@
             "MIMode": "gdb",
             "targetArchitecture": "arm",
             "miDebuggerPath": "gdb-multiarch",
-            "miDebuggerServerAddress": "10.8.42.250:2345",
+            "miDebuggerServerAddress": "10.8.42.212:2345",
             "program": "${workspaceFolder}/output/${workspaceFolderBasename}"
         }
     ]

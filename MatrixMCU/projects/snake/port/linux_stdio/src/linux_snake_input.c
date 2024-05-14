@@ -11,8 +11,8 @@
 #include <unistd.h>
 
 static int kbhit() {
-    static const int STDIN = 0;
-    static bool initialized = false;
+static const int STDIN = 0;
+static bool initialized = false;
 
     if (! initialized) {
         // Use termios to turn off line buffering
@@ -47,7 +47,22 @@ snake_input_update_new_heading (snake_game_t* p_game)
   //DOWN: 's'
   //LEFT: 'a'
   //RIGHT: 'd'
-    
+  char tecla;
+  if(kbhit()){
+    tecla=getchar();
+    if(tecla=='w'){
+      p_game->new_heading = UP;
+    }
+    else if(tecla=='s'){
+      p_game->new_heading = DOWN;
+    }
+    else if(tecla=='d'){
+      p_game->new_heading = RIGHT;
+    }
+    else if(tecla=='a'){
+      p_game->new_heading = LEFT;
+    }
+  }
 }
 
 void

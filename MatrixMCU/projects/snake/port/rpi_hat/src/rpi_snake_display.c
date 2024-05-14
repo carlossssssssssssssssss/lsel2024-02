@@ -61,14 +61,6 @@ static int open_fbdev(const char *dev_name)
 static int fbfd = 0;
 static struct fb_t* fb = NULL;
 
-struct snake_t snake = {
-	{NULL, 4, 4},
-	NULL,
-	NONE,
-};
-struct apple_t apple = {
-	4, 4,
-};
 
 void 
 snake_display_render(snake_game_t* p_game)
@@ -81,11 +73,11 @@ snake_display_render(snake_game_t* p_game)
   /* Draw snake body as RED */
   	struct segment_t *seg_i;
 	memset(fb, 0, 128);
-	for(seg_i = snake.tail; seg_i->next; seg_i=seg_i->next) {
-		fb->pixel[seg_i->x][seg_i->y] = 0x7E0;
+	for(seg_i = p_game->snake.tail; seg_i->next; seg_i=seg_i->next) {
+		fb->pixel[seg_i->y][seg_i->x] = 0xF800;
 	}
-	fb->pixel[seg_i->x][seg_i->y]=0xFFFF;
-	fb->pixel[apple.x][apple.y]=0xF800;
+	fb->pixel[seg_i->y][seg_i->x]=0x001F;
+	fb->pixel[p_game->apple.y][p_game->apple.x]=0x07E0;
 
 }
 

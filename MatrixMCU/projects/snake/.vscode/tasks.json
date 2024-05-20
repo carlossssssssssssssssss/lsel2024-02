@@ -41,7 +41,29 @@
 			},
 			"args": [
 				"PLATFORM=linux_stdio", "PREFIX=aarch64-none-linux-gnu-"
-				//,"SAMPLE_FILE=sample_input"
+				,"SAMPLE_FILE=sample_time"
+			]
+		},
+		{
+			"label": "Build stm32",
+			"options": {
+				"cwd": "${workspaceRoot}"
+			},
+			"group": {
+				"kind": "build"
+			},
+			"linux": {
+				"command": "make"
+			},
+			"osx": {
+				"command": "make"
+			},
+			"windows": {
+				"command": "mingw32-make"
+			},
+			"args": [
+				"PLATFORM=stm32f411e_stdio", "PREFIX=arm-none-eabi-"
+				,"SAMPLE_FILE=sample_time"
 			]
 		},
 		{

@@ -17,5 +17,5 @@ snake_time_close()
 void 
 snake_time_delay_ms (uint32_t ms) 
 {
-  /* TODO Use HAL function to wait ms */
+  HAL_Delay(ms);
 }

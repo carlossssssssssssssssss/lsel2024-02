@@ -15,10 +15,10 @@ static void EXTILine0_Config(void)
   
   /* Configure PA0 pin as input floating */
   /* TODO Fill init */
-  //GPIO_InitStructure.Mode = 
-  //GPIO_InitStructure.Pull = 
-  //GPIO_InitStructure.Pin = 
-  //HAL_GPIO_Init(xxx, xxx);
+  GPIO_InitStructure.Mode = GPIO_MODE_INPUT; 
+  GPIO_InitStructure.Pull = GPIO_PULLUP;
+  GPIO_InitStructure.Pin = GPIO_PIN_0;
+  HAL_GPIO_Init(F,6);
 
   /* Enable and set EXTI Line0 Interrupt to the lowest priority */
   HAL_NVIC_SetPriority(EXTI0_IRQn, 2, 0);
@@ -32,6 +32,7 @@ snake_input_init(snake_game_t* p_game)
     return 0;
   }
   /* TODO Clear flag */
+  button_flag=0;
   button_heading = UP;
   EXTILine0_Config();
   return 1;
@@ -47,6 +48,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   if(GPIO_Pin == GPIO_PIN_0)
   {
     /* TODO Set flag */ 
+    button_flag=1;
   }
 }
 
@@ -54,14 +56,31 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 void
 snake_input_update_new_heading (snake_game_t* p_game)
 {
-    p_game->new_heading = p_game->snake.heading;
     /* Global variable button_heading indicates last heading value of button */
     /* Change: every USER button pressed, change button_heading COUNTERCLOCKWISE: */
     /* From LEFT to DOWN */
+    if(button_flag){
+      if(button_heading==LEFT){
+        button_heading= DOWN;
+      }
     /* From DOWN to RIGHT */
+      if(button_heading==DOWN){
+        button_heading= RIGHT;
+      }
     /* From RIGHT to UP */
+      if(button_heading==RIGHT){
+        button_heading= UP;
+      }
     /* From UP to LEFT */
+      if(button_heading==UP){
+        button_heading= LEFT;
+      }
+      p_game->new_heading=button_heading;
+      p_game->new_heading = p_game->snake.heading;
+      button_flag=0;
+    }
     /* TODO Check flag, clear and update new_heading and stm32 heading */
+
 }
 
 void

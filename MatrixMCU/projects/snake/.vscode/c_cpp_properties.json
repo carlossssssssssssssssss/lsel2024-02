@@ -27,6 +27,23 @@
             "cppStandard": "gnu++17",
             "intelliSenseMode": "linux-gcc-arm"
         },
+        {
+            "name": "cross-stm32f411",
+            "includePath": [
+                "${workspaceFolder}/common/**",
+                "${workspaceFolder}/common/include/",
+                "${workspaceFolder}/port/stm32f411e_stdio/**",
+                "${workspaceFolder}/port/stm32f411e_stdio/include/",
+                "${workspaceFolder}/../../drivers/stm32f4xx/**",
+                "${workspaceFolder}/../../lib/fsm/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-arm"
+        }
+
     ],
     "version": 4
 }

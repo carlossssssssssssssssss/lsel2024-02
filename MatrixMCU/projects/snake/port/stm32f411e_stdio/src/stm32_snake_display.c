@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "stm32_init.h"
 
 #define MAX_X 16
 #define MAX_Y 16
@@ -26,16 +27,18 @@ static void
 clear_screen()
 {
   printf("\e[1;1H\e[2J");
-  fsync(1);
+//  fsync(1);
 }
 
 static void
 print_hlimit(snake_game_t* p_game)
 {
-  printf("+");
+  _write("+");
 
   /* TODO print row of limit with - */
-
+  for(int x=0;x<p_game->limits.x;x++){
+    printf("-");
+  }
   printf("+\r\n");
 }
 
@@ -51,6 +54,7 @@ print_row(snake_game_t* p_game, int y)
 }
 
 
+
 void 
 snake_display_render(snake_game_t* p_game)
 {
@@ -59,7 +63,7 @@ snake_display_render(snake_game_t* p_game)
   /* - Snake head is CHAR_HEAD */
   /* - Snake body CHAR_BODY */
   /* - Empty pixels are CHAR_EMPTY */
-  struct segment_t *seg_i;
+  //struct segment_t *seg_i;
 
   /* Set Blank */
   memset(fb, CHAR_EMPTY, sizeof(struct fb_t));

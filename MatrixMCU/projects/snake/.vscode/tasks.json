@@ -63,7 +63,7 @@
 			},
 			"args": [
 				"PLATFORM=stm32f411e_stdio", "PREFIX=arm-none-eabi-"
-				,"SAMPLE_FILE=sample_time"
+				//,"SAMPLE_FILE=sample_input"
 			]
 		},
 		{
@@ -90,6 +90,14 @@
 			"dependsOn": [
 				"Clean",
 				"Build rpi_hat native"
+			],
+			"dependsOrder": "sequence"
+		},
+		{
+			"label": "Clean & Re-Build STM32F411E-DISCO",
+			"dependsOn": [
+				"Clean",
+				"Build stm32"
 			],
 			"dependsOrder": "sequence"
 		},

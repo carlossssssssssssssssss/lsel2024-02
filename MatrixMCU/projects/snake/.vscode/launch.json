@@ -47,7 +47,7 @@
             "device": "STM32F411E-DISCO",
             //"serverpath": "C:/Program Files/openocd/bin/openocd.exe", // If you are not using Windows, you must remove this line
             "configFiles": [
-            "port/stm32f411-disco/openocd.cfg"
+            "port/stm32f411e_stdio/openocd.cfg"
             ],
             "preLaunchTask": "Clean & Re-Build STM32F411E-DISCO",
             "svdFile": "../../svd/STM32F411.svd",

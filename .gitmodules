@@ -1,5 +1,5 @@
 [submodule "MatrixMCU/drivers/components/common"]
-	path = MatrixMCU/drivers/components/common
+	path = MatrixMCU/drivers/components/Common
 	url = https://github.com/STMicroelectronics/stm32-bsp-common
 [submodule "MatrixMCU/drivers/components/lsm303dlhc"]
 	path = MatrixMCU/drivers/components/lsm303dlhc

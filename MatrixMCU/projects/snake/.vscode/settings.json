@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "*.port": "makefile",
+        "rb.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "snake_time.h": "c",
+        "snake_display.h": "c",
+        "unistd.h": "c",
+        "stm32f4xx.h": "c",
+        "stm32f4xx_hal_i2c.h": "c",
+        "stm32_hal_msp.h": "c",
+        "stm32_init.h": "c"
+    },
+    "ceedlingExplorer.problemMatching": {
+        "mode": "gcc"
+    },
+    "ceedlingExplorer.debugConfiguration": "Ceedling - Debug test",
+    "ceedlingExplorer.prettyTestLabel": true,
+    "ceedlingExplorer.projectPath": "./ceedling",
+    "*.port": "makefile"
+}

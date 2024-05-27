@@ -1,0 +1,143 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build rpi_hat native",
+			"options": {
+				"cwd": "${workspaceRoot}"
+			},
+			"group": {
+				"kind": "build"
+			},
+			"linux": {
+				"command": "make"
+			},
+			"osx": {
+				"command": "make"
+			},
+			"windows": {
+				"command": "mingw32-make"
+			},
+			"args": [
+				"PLATFORM=rpi_hat"
+			]
+		},
+		{
+			"label": "Build rpi_hat Cross RPi 64-bit",
+			"options": {
+				"cwd": "${workspaceRoot}"
+			},
+			"group": {
+				"kind": "build"
+			},
+			"linux": {
+				"command": "make"
+			},
+			"osx": {
+				"command": "make"
+			},
+			"windows": {
+				"command": "mingw32-make"
+			},
+			"args": [
+				"PLATFORM=linux_stdio", "PREFIX=aarch64-none-linux-gnu-"
+				,"SAMPLE_FILE=sample_time"
+			]
+		},
+		{
+			"label": "Build stm32_stdio",
+			"options": {
+				"cwd": "${workspaceRoot}"
+			},
+			"group": {
+				"kind": "build"
+			},
+			"linux": {
+				"command": "make"
+			},
+			"osx": {
+				"command": "make"
+			},
+			"windows": {
+				"command": "mingw32-make"
+			},
+			"args": [
+				"PLATFORM=stm32f411e_stdio", "PREFIX=arm-none-eabi-"
+				//,"SAMPLE_FILE=sample_input"
+			]
+		},
+		{
+			"label": "Build stm32_acc",
+			"options": {
+				"cwd": "${workspaceRoot}"
+			},
+			"group": {
+				"kind": "build"
+			},
+			"linux": {
+				"command": "make"
+			},
+			"osx": {
+				"command": "make"
+			},
+			"windows": {
+				"command": "mingw32-make"
+			},
+			"args": [
+				"PLATFORM=stm32f411e_acc_lcd", "PREFIX=arm-none-eabi-"
+				//,"SAMPLE_FILE=sample_input"
+			]
+		},
+		{
+			"label": "Clean",
+			"command": "make",
+			"options": {
+				"cwd": "${workspaceRoot}"
+			},
+			"linux": {
+				"command": "make"
+			},
+			"osx": {
+				"command": "make"
+			},
+			"windows": {
+				"command": "mingw32-make"
+			},
+			"args": [
+				"clean"
+			]
+		},
+		{
+			"label": "Clean & Re-Build rpi_hat native",
+			"dependsOn": [
+				"Clean",
+				"Build rpi_hat native"
+			],
+			"dependsOrder": "sequence"
+		},
+		{
+			"label": "Clean & Re-Build STM32F411E-DISCO_stdio",
+			"dependsOn": [
+				"Clean",
+				"Build stm32_stdio"
+			],
+			"dependsOrder": "sequence"
+		},
+		{
+			"label": "Clean & Re-Build STM32F411E-DISCO_ACC",
+			"dependsOn": [
+				"Clean",
+				"Build stm32_acc"
+			],
+			"dependsOrder": "sequence"
+		},
+		{
+			"label": "Clean & Re-Build rpi_hat cross 64-bit",
+			"dependsOn": [
+				"Clean",
+				"Build rpi_hat Cross RPi 64-bit"
+			],
+			"dependsOrder": "sequence"
+		}
+	]
+}

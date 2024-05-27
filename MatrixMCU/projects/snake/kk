@@ -1,0 +1,28 @@
+arm-none-eabi-gcc output/main.o output/snake.o 
+output/stm32f4xx_hal_tim.o output/stm32f4xx_hal_tim_ex.o output/stm32f4xx_hal_uart.o output/stm32f4xx_hal.o output/stm32f4xx_hal_i2c.o output/stm32f4xx_hal_i2c_ex.o output/stm32f4xx_hal_rcc.o output/stm32f4xx_hal_rcc_ex.o output/stm32f4xx_hal_flash.o output/stm32f4xx_hal_flash_ex.o output/stm32f4xx_hal_flash_ramfunc.o output/stm32f4xx_hal_gpio.o output/stm32f4xx_hal_dma.o output/stm32f4xx_hal_dma_ex.o output/stm32f4xx_hal_pwr.o output/stm32f4xx_hal_pwr_ex.o output/stm32f4xx_hal_cortex.o output/stm32f4xx_hal_exti.o 
+
+output/stm32_snake_time.o 
+output/stm32_snake_display.o 
+output/stm32_hal_msp.o 
+output/stm32_init.o 
+output/stm32_bsp.o 
+output/stm32_snake_random.o 
+output/stm32_snake_input.o 
+output/stm32_print.o 
+output/system_stm32f4xx.o 
+
+output/stm32_snake_time.o 
+output/stm32_snake_display.o 
+output/stm32_hal_msp.o 
+output/stm32_init.o 
+output/stm32_bsp.o 
+output/stm32_snake_random.o 
+output/stm32_snake_input.o 
+output/stm32_print.o 
+output/system_stm32f4xx.o 
+
+output/lsm303dlhc.o 
+output/startup_stm32f411xe.o  
+
+
+-mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -specs=nano.specs -Tport/stm32f411e_stdio/STM32F411RETx_FLASH.ld -lc -lm -lnosys  -o output/snake.elf

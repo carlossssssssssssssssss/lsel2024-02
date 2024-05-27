@@ -1,7 +1,7 @@
 output/stm32f4xx_hal_dma.o: \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
- port/stm32f411e_stdio/include/stm32f4xx_hal_conf.h \
+ port/stm32f411e_acc_lcd/include/stm32f4xx_hal_conf.h \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
  ../../drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
@@ -76,7 +76,7 @@ output/stm32f4xx_hal_dma.o: \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_lptim.h \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_mmc.h
 ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
-port/stm32f411e_stdio/include/stm32f4xx_hal_conf.h:
+port/stm32f411e_acc_lcd/include/stm32f4xx_hal_conf.h:
 ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
 ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:
 ../../drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:

@@ -1,4 +1,4 @@
-output/stm32_init.o: port/stm32f411e_stdio/src/stm32_init.c \
+output/stm32_init.o: port/stm32f411e_acc_lcd/src/stm32_init.c \
  ../../drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  ../../drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h \
  ../../drivers/stm32f4xx/CMSIS/Include/core_cm4.h \
@@ -8,7 +8,7 @@ output/stm32_init.o: port/stm32f411e_stdio/src/stm32_init.c \
  ../../drivers/stm32f4xx/CMSIS/Include/mpu_armv7.h \
  ../../drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
- port/stm32f411e_stdio/include/stm32f4xx_hal_conf.h \
+ port/stm32f411e_acc_lcd/include/stm32f4xx_hal_conf.h \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
  ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
@@ -83,7 +83,7 @@ output/stm32_init.o: port/stm32f411e_stdio/src/stm32_init.c \
 ../../drivers/stm32f4xx/CMSIS/Include/mpu_armv7.h:
 ../../drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h:
 ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
-port/stm32f411e_stdio/include/stm32f4xx_hal_conf.h:
+port/stm32f411e_acc_lcd/include/stm32f4xx_hal_conf.h:
 ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
 ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:
 ../../drivers/stm32f4xx/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:

@@ -54,6 +54,8 @@ SOURCES += $(wildcard $(patsubst %,%/*.c, $(PORT)/$(PLATFORM)/src))
 
 # ASM sources
 AS_SOURCES += $(CMSIS_DIR)/Device/ST/STM32F4xx/Source/Templates/gcc/startup_stm32f411xe.s
+COMPONENTS := $(DRIVERS)/components
+SOURCES += $(COMPONENTS)/lsm303dlhc/lsm303dlhc.c
 
 # cpu
 CPU := -mcpu=cortex-m4
@@ -90,6 +92,8 @@ endif
 
 # Directories with required header files for port files
 INCLUDES += -I$(PORT)/$(PLATFORM)/include
+INCLUDES += -I$(COMPONENTS)/Common
+INCLUDES += -I$(COMPONENTS)/lsm303dlhc
 
 #######################################
 # CFLAGS

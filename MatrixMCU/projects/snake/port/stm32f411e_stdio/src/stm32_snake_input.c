@@ -1,6 +1,6 @@
 #include "snake_input.h"
 #include "stm32_init.h"
-
+#include "stm32_bsp."
 #include "stm32f4xx.h"
 
 static int button_flag;
@@ -32,6 +32,9 @@ snake_input_init(snake_game_t* p_game)
     return 0;
   }
   /* TODO Clear flag */
+  if (!COMPASSACCELERO_IO_Init()) {
+    return 0;
+  }
   button_flag=0;
   button_heading = UP;
   EXTILine0_Config();
